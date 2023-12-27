@@ -1,21 +1,34 @@
 const express = require('express');
 const verifyProof = require('../utils/verifyProof');
+const MerkleTree = require('../utils/MerkleTree');
+const niceList = require('../utils/niceList');
+const { bytesToHex } = require('ethereum-cryptography/utils');
 
 const port = 1225;
 
 const app = express();
 app.use(express.json());
 
-// TODO: hardcode a merkle root here representing the whole nice list
+// create the merkle tree for the whole nice list
+const merkleTree = new MerkleTree(niceList);
+// merkleTree.leaves.forEach((item) => console.log(bytesToHex(item)));
 // paste the hex string in here, without the 0x prefix
-const MERKLE_ROOT = '';
+const MERKLE_ROOT = merkleTree.getRoot();
+console.log("ROOT: " + MERKLE_ROOT);
 
 app.post('/gift', (req, res) => {
+  let isInTheList = false;
   // grab the parameters from the front-end here
   const body = req.body;
+  console.log(body);
+  const proof = body.merkleProof;
+  const name = body.keyName;
+  console.log(name);
 
   // TODO: prove that a name is in the list 
-  const isInTheList = false;
+
+  isInTheList = verifyProof(proof, name, MERKLE_ROOT);
+  
   if(isInTheList) {
     res.send("You got a toy robot!");
   }
