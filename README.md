@@ -3,6 +3,9 @@ This application is designed to demonstrate the use of Merkle Trees for efficien
 
 The project is an exemplary implementation of a Merkle Tree in a client-server architecture, where the client generates a proof for a name, and the server verifies this proof against a pre-generated Merkle Root to confirm the name's presence on the list.
 
+# My Approach
+I preferred to calculate the Merkle proof on the client-side as the size of the Merkle Tree was not huge, but another option might be to calculate the proof on the server (node) in order not to expose the whole tree to the clients, and allow lightweight client to operate smoothly. A hybrid approach might as well be adhered. Project size and requirements are key factors so as to pick a design approach. 
+
 # Repository Structure
 
 - `client/index.js`: The client-side logic for generating Merkle Tree proofs for a given name.
