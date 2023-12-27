@@ -4,15 +4,16 @@ This application is designed to demonstrate the use of Merkle Trees for efficien
 The project is an exemplary implementation of a Merkle Tree in a client-server architecture, where the client generates a proof for a name, and the server verifies this proof against a pre-generated Merkle Root to confirm the name's presence on the list.
 
 # Repository Structure
-`/utils`: Contains the necessary utilities for Merkle Tree operations.
-
-- `niceList.json`: A list of names eligible for gifts. Feel free to modify this list as needed.
-- `MerkleTree.js`: A utility module for creating and handling Merkle Trees.
-- `verifyProof.js`: Utility function for verifying Merkle Proofs against a given Merkle Root.
-- `example.js`: Demonstrates how to generate a root, a proof, and verify a value using these utilities. Run it using node example.js.
 
 - `client/index.js`: The client-side logic for generating Merkle Tree proofs for a given name.
 - `server/index.js`: The server-side logic for verifying the proof provided by the client.
+
+`/utils`: Contains the necessary utilities for Merkle Tree operations.
+
+  - `niceList.json`: A list of names eligible for gifts. Feel free to modify this list as needed.
+  - `MerkleTree.js`: A utility module for creating and handling Merkle Trees.
+  - `verifyProof.js`: Utility function for verifying Merkle Proofs against a given Merkle Root.
+  - `example.js`: Demonstrates how to generate a root, a proof, and verify a value using these utilities. Run it using node example.js.
 
 # How It Works
 **Client (Prover):** The client takes a name and generates a Merkle Proof using `MerkleTree.js`. This proof is then sent to the server.
