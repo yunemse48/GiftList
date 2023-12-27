@@ -11,6 +11,47 @@ app.use(express.json());
 
 // create the merkle tree for the whole nice list
 const merkleTree = new MerkleTree(niceList);
+
+function sizeof(object) {
+  const objectList = [];
+  const stack = [object];
+  let bytes = 0;
+
+  while (stack.length) {
+    const value = stack.pop();
+
+    if (typeof value === 'boolean') {
+      bytes += 4;
+    } else if (typeof value === 'string') {
+      bytes += value.length * 2;
+    } else if (typeof value === 'number') {
+      bytes += 8;
+    } else if (
+      typeof value === 'object'
+      && objectList.indexOf(value) === -1
+    ) {
+      objectList.push(value);
+
+      for (let i in value) {
+        if (value.hasOwnProperty(i)) {
+          stack.push(value[i]);
+        }
+      }
+    }
+  }
+
+  return bytes;
+}
+
+console.log(sizeof(merkleTree));
+
+
+function jsonSize(obj) {
+  return new Blob([JSON.stringify(obj)]).size;
+}
+
+console.log(jsonSize(merkleTree));
+
 // merkleTree.leaves.forEach((item) => console.log(bytesToHex(item)));
 // paste the hex string in here, without the 0x prefix
 const MERKLE_ROOT = merkleTree.getRoot();
