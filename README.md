@@ -1,28 +1,34 @@
-This project is going to be used as a base for personal work. 
+# Project Overview
+This application is designed to demonstrate the use of Merkle Trees for efficient and secure verification of data. In this scenario, the system manages a list of names eligible to receive a gift. The client, acting as a prover, needs to confirm to the server (the verifier) that a particular name is on the list using a Merkle Tree-based proof.
 
-# Gift List
+The project is an exemplary implementation of a Merkle Tree in a client-server architecture, where the client generates a proof for a name, and the server verifies this proof against a pre-generated Merkle Root to confirm the name's presence on the list.
 
-To get started with the repository, clone it and then run `npm install` in the top-level directory to install the depedencies.
+# Repository Structure
+`/utils`: Contains the necessary utilities for Merkle Tree operations.
 
-There are three folders in this repository:
+- `niceList.json`: A list of names eligible for gifts. Feel free to modify this list as needed.
+- `MerkleTree.js`: A utility module for creating and handling Merkle Trees.
+- `verifyProof.js`: Utility function for verifying Merkle Proofs against a given Merkle Root.
+- `example.js`: Demonstrates how to generate a root, a proof, and verify a value using these utilities. Run it using node example.js.
 
-## Client
+- `client/index.js`: The client-side logic for generating Merkle Tree proofs for a given name.
+- `server/index.js`: The server-side logic for verifying the proof provided by the client.
 
-You can run the client from the top-level directory with `node client/index`. This file is a script which will send an HTTP request to the server.
+# How It Works
+**Client (Prover):** The client takes a name and generates a Merkle Proof using `MerkleTree.js`. This proof is then sent to the server.
 
-Think of the client as the _prover_ here. It needs to prove to the server that some `name` is in the `MERKLE_ROOT` on the server. 
+**Server (Verifier):** Upon receiving the proof from the client, the server uses `verifyProof.js` to check whether the provided name is in the Merkle Tree corresponding to the pre-generated Merkle Root. If the verification is successful, the server acknowledges that the name is on the list.
 
-## Server
+# Running the Application
+### Install Dependencies:
 
-You can run the server from the top-level directory with `node server/index`. This file is an express server which will be hosted on port 1225 and respond to the client's request.
+- Ensure you have Node.js installed.
+- Install necessary Node modules by running npm install in the project's root directory.
 
-Think of the server as the _verifier_ here. It needs to verify that the `name` passed by the client is in the `MERKLE_ROOT`. If it is, then we can send the gift! 
+### Running the Server:
 
-## Utils
+Start the server by executing `nodemon server/index`
 
-There are a few files in utils:
+### Running the Client:
 
-- The `niceList.json` which contains all the names of the people who deserve a gift this year (this is randomly generated, feel free to add yourself and others to this list!)
-- The `example.js` script shows how we can generate a root, generate a proof and verify that some value is in the root using the proof. Try it out from the top-level folder with `node/example.js`
-- The `MerkleTree.js` should look familiar from the Merkle Tree module! This one has been modified so you should not have to deal with any crypto type conversion. You can import this in your client/server
-- The `verifyProof.js` should also look familiar. This was the last stage in the module. You can use this function to prove a name is in the merkle root, as show in the example.
+Run the client script with `node client/index`
